@@ -1,0 +1,51 @@
+-- Table: wh.country_dimension
+
+-- DROP TABLE wh.country_dimension cascade;
+
+CREATE TABLE wh.country_dimension
+(
+    country_dimension_id integer NOT NULL DEFAULT nextval('teams_id_seq'::regclass),
+	country varchar(50),
+	images_file varchar(50),
+	image_url character varying(100) COLLATE pg_catalog."default",
+	alpha_2 varchar(50),
+	alpha_3 varchar(50),
+	country_code integer,
+	iso_code varchar(50),
+	region varchar(50),
+	sub_region integer,
+	intermediate_sub_region integer,
+    CONSTRAINT country_dimension_pk PRIMARY KEY (country)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE wh.country_dimension
+    OWNER to postgres;
+
+-- Table: wh.country_happiness_fact
+
+-- DROP TABLE wh.country_happiness_fact;
+
+CREATE TABLE wh.country_happiness_fact
+(
+    country_dimension_code character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    calendar_date integer NOT NULL,
+    happiness_score numeric,
+    economy_gdp numeric,
+    family numeric,
+    health_life_expectancy numeric,
+    perception_of_corruption numeric,
+    generosity numeric,
+    dystopia_residual numeric,
+    freedom numeric,
+    social_support numeric,
+    lower_confidence numeric,
+    upper_confidence numeric,
+    CONSTRAINT country_happiness_fact_pk PRIMARY KEY (calendar_date, country_dimension_code)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE wh.country_happiness_fact
+    OWNER to postgres;
